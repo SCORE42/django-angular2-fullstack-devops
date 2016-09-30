@@ -2,10 +2,11 @@
 
 # General
 export SERVER_ROOT_NAME=webapps
-export APPLICATION_NAME=fullstack
+export APPLICATION_NAME=skur
 export PROJECT_NAME=backend
 export GIT_REPO=git@github.com:stphivos/django-angular2-fullstack-devops.git
 export GIT_BRANCH=dev
+export CHROME_BIN=/usr/bin/google-chrome-stable
 
 # AWS
 export REGION=$(aws configure get region)

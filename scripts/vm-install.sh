@@ -122,7 +122,34 @@ apt-get install -y  build-essential python-dev python3-dev libpq-dev \
                     libexpat1-dev libbluetooth-dev libgdbm-dev dpkg-dev quilt autotools-dev \
                     libreadline-dev libtinfo-dev libncursesw5-dev tk-dev blt-dev \
                     zlib1g-dev libbz2-dev libexpat1-dev libbluetooth-dev libsqlite3-dev \
-                    libgpm2 mime-support netbase net-tools bzip2
+                    libgpm2 mime-support netbase net-tools bzip2 xdg-utils
+
+#=========================================================
+echo "Download the latest chrome..."
+#=========================================================
+wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo rm google-chrome-stable_current_amd64.deb
+sudo apt-get install -y -f
+
+#=========================================================
+echo "Download latest selenium server..."
+#=========================================================
+SELENIUM_VERSION=$(curl "https://selenium-release.storage.googleapis.com/" | perl -n -e'/.*<Key>([^>]+selenium-server-standalone[^<]+)/ && print $1')
+wget "https://selenium-release.storage.googleapis.com/${SELENIUM_VERSION}" -O selenium-server-standalone.jar
+chown vagrant:vagrant selenium-server-standalone.jar
+
+#=========================================================
+echo "Download latest chrome driver..."
+#=========================================================
+CHROMEDRIVER_VERSION=$(curl "http://chromedriver.storage.googleapis.com/LATEST_RELEASE")
+wget "http://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+unzip chromedriver_linux64.zip
+sudo rm chromedriver_linux64.zip
+chown vagrant:vagrant chromedriver
+
+
+
 
 echo "Installing Git..."
 apt-get -y install git

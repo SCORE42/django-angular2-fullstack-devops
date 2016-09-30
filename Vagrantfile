@@ -20,6 +20,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.forward_agent = true
 
+  config.vm.provision :shell do |shell|
+    shell.inline = "touch $1 && chmod 0440 $1 && echo $2 > $1"
+    shell.args = %q{/etc/sudoers.d/root_ssh_agent "Defaults    env_keep += \"SSH_AUTH_SOCK\""}
+  end
+
+  config.vm.provision "shell", :path => "scripts/vm-install.sh"
+
   config.vm.provision "shell", path: "scripts/setup.sh"
   config.vm.provision :shell do |s|
     s.env = {
